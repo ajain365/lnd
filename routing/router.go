@@ -9,6 +9,7 @@ import (
 	"sync"
 	"sync/atomic"
 	"time"
+  "math/rand"
 
 	"github.com/btcsuite/btcd/btcec/v2"
 	"github.com/btcsuite/btcd/btcutil"
@@ -1417,6 +1418,11 @@ func (r *ChannelRouter) addZombieEdge(chanID uint64) error {
 // then error is returned.
 func (r *ChannelRouter) processUpdate(msg interface{},
 	op ...batch.SchedulerOption) error {
+
+  if rand.Intn(100) < 100 {
+    fmt.Println("[ERRINJ]: not processing update and returning error")
+    return errors.Errorf("ERRINJ ignored update: %v", msg)
+  }
 
 	switch msg := msg.(type) {
 	case *channeldb.LightningNode:
