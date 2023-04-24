@@ -586,6 +586,9 @@ func (i *InvoiceRegistry) AddInvoice(invoice *Invoice,
 	ref := InvoiceRefByHash(paymentHash)
 	log.Debugf("Invoice%v: added with terms %v", ref, invoice.Terms)
 
+	log.Debugf("[ERRINJ]: Killin this invoice!")
+	return 0, nil
+
 	addIndex, err := i.idb.AddInvoice(invoice, paymentHash)
 	if err != nil {
 		i.Unlock()
